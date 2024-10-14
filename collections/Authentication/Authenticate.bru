@@ -1,0 +1,22 @@
+meta {
+  name: Authenticate
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "petrusdemelo@gmail.com",
+    "password": "123456"
+  }
+}
+
+script:post-response {
+  bru.setVar("accessToken", res.body.accessToken);
+}

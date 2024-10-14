@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "003-api-rest-com-spring",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

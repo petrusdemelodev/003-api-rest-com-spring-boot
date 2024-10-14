@@ -1,0 +1,111 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:549437042280:task-definition/dev-task:1",
+  "containerDefinitions": [
+      {
+          "name": "dev-container",
+          "image": "549437042280.dkr.ecr.us-east-1.amazonaws.com/se-inscreve-no-canal:latest",
+          "cpu": 512,
+          "memory": 1024,
+          "portMappings": [
+              {
+                  "containerPort": 8080,
+                  "hostPort": 8080,
+                  "protocol": "tcp"
+              }
+          ],
+          "essential": true,
+          "environment": [
+              {
+                  "name": "TABLE_NAME",
+                  "value": "dev-users"
+              },
+              {
+                  "name": "AWS_REGION",
+                  "value": "us-east-1"
+              }
+          ],
+          "mountPoints": [],
+          "volumesFrom": [],
+          "secrets": [
+              {
+                  "name": "JWT_SECRET",
+                  "valueFrom": "arn:aws:ssm:us-east-1:549437042280:parameter/dev-secret"
+              }
+          ],
+          "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                  "awslogs-group": "/aws/ecs/se-inscreve-no-canal",
+                  "awslogs-region": "us-east-1",
+                  "awslogs-stream-prefix": "ecs"
+              }
+          },
+          "healthCheck": {
+              "command": [
+                  "CMD-SHELL",
+                  "curl -f http://localhost:8080/actuator/health || exit 1"
+              ],
+              "interval": 30,
+              "timeout": 5,
+              "retries": 3,
+              "startPeriod": 60
+          },
+          "systemControls": []
+      }
+  ],
+  "family": "dev-task",
+  "taskRoleArn": "arn:aws:iam::549437042280:role/devServiceRole",
+  "executionRoleArn": "arn:aws:iam::549437042280:role/devServiceRole",
+  "networkMode": "awsvpc",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+      {
+          "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+      },
+      {
+          "name": "ecs.capability.execution-role-awslogs"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.ecr-auth"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.task-iam-role"
+      },
+      {
+          "name": "ecs.capability.container-health-check"
+      },
+      {
+          "name": "ecs.capability.execution-role-ecr-pull"
+      },
+      {
+          "name": "ecs.capability.secrets.ssm.environment-variables"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+      },
+      {
+          "name": "ecs.capability.task-eni"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+      }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+      "EC2",
+      "FARGATE"
+  ],
+  "requiresCompatibilities": [
+      "FARGATE"
+  ],
+  "cpu": "512",
+  "memory": "1024",
+  "registeredAt": "2024-10-07T18:18:20.799Z",
+  "registeredBy": "arn:aws:iam::549437042280:user/petrusdemelo-cli",
+  "tags": []
+}

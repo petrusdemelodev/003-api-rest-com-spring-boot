@@ -1,0 +1,26 @@
+meta {
+  name: Create user
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Petrus de Melo",
+    "email": "petrusdemelo@gmail.com",
+    "password": "123456"
+  }
+}
+
+script:post-response {
+  if(res.status == 200){
+    bru.setVar("id", res.body.id);
+  }
+  
+}
